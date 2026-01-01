@@ -14,17 +14,20 @@ class Person:
 
 def create_person_list(people: list) -> list:
 
-    person_list = []
+    person_list = [
+        Person(one_person["name"], one_person["age"])
+        for one_person in people
+    ]
 
     for one_person in people:
-        person_list.append(Person(one_person["name"], one_person["age"]))
+        current = Person.people[one_person["name"]]
 
-    for one_person in people:
-        curent = Person.people[one_person["name"]]
-        if "husband" in one_person and one_person["husband"] is not None:
-            curent.husband = Person.people[one_person["husband"]]
+        husband_name = one_person.get("husband")
+        if husband_name is not None:
+            current.husband = Person.people[husband_name]
 
-        if "wife" in one_person and one_person["wife"] is not None:
-            curent.wife = Person.people[one_person["wife"]]
+        wife_name = one_person.get("wife")
+        if wife_name is not None:
+            current.wife = Person.people[wife_name]
 
     return person_list
